@@ -68,32 +68,32 @@ class EduHelper:
         }
 
         res = self.session.post(url=self.url, data=json.dumps(data), headers=self.h, verify=False)
-        
+
         js = res.json()
         token = js['token']
         self.cookie['reese84'] = token
-        print(fg + ' (success)')
+        print(f'{fg} (success)')
         return token
     
     def _tryHarder(self):
         token = self.getAuthToken()
         print(fc + sd + '[' + fm + sb + '*' + fc + sd + '] ' + fg + 'Fetching Cookies', end='')
         self.session.get(url=self.url1, cookies=self.cookie, headers=self.h, verify=False)
-        print(fg + ' (success)')
+        print(f'{fg} (success)')
 
         data2 = '"{tok}"'.format(tok=token)
         print(fc + sd + '[' + fm + sb + '*' + fc + sd + '] ' + fg + 'Sending Custom Fields and Token to Server', end='')
         resp = self.session.post(url=self.url2, data=data2, headers=self.h2, verify=False)
-        print(fg + ' (success)')
+        print(f'{fg} (success)')
         js = resp.json()
         print(fc + sd + '[' + fm + sb + '*' + fc + sd + '] ' + fg + 'Setting Incap Token', end='')
         token = js['token']
         self.cookie['reese84'] = token
-        print(fg + ' (success)')
+        print(f'{fg} (success)')
 
         print(fc + sd + '[' + fm + sb + '*' + fc + sd + '] ' + fg + 'Sending Custom Cookies', end='')
         data3 = '_eventId_continue=&flowId=e1s1'
         resp3 = self.session.post(url=self.url3, data=data3, headers=self.h3, cookies=self.cookie, verify=False)
-        print(fg + ' (success)')
+        print(f'{fg} (success)')
 
         return resp3.url, self.session.cookies, token
